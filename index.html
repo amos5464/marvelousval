@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Georgia', serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #ffafcc, #ffc8dd, #cdb4db);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 25px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        max-width: 850px;
+        width: 100%;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        border: 8px solid #ff4d8d;
+      }
+
+      .heart-bg {
+        position: absolute;
+        color: rgba(255, 77, 141, 0.05);
+        font-size: 120px;
+        z-index: 0;
+      }
+
+      .heart-1 {
+        top: 20px;
+        left: 30px;
+      }
+      .heart-2 {
+        top: 40px;
+        right: 40px;
+      }
+      .heart-3 {
+        bottom: 30px;
+        left: 50px;
+      }
+      .heart-4 {
+        bottom: 50px;
+        right: 60px;
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        color: #ff4d8d;
+        font-size: 3rem;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .subtitle {
+        color: #ff1493;
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      .message-box {
+        background: linear-gradient(to right, #fff0f6, #fff9fb);
+        border-radius: 20px;
+        padding: 35px;
+        margin: 30px 0;
+        text-align: left;
+        border-left: 6px solid #ff4d8d;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      .message-box p {
+        line-height: 1.8;
+        margin-bottom: 25px;
+        font-size: 1.25rem;
+        color: #555;
+      }
+
+      .highlight {
+        color: #ff4d8d;
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      .question {
+        font-size: 2rem;
+        color: #ff1493;
+        margin: 40px 0;
+        font-weight: bold;
+      }
+
+      .buttons-container {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 40px 0;
+        position: relative;
+        min-height: 150px;
+      }
+
+      .btn {
+        padding: 20px 50px;
+        font-size: 1.6rem;
+        border: none;
+        border-radius: 60px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 10;
+        min-width: 180px;
+      }
+
+      .yes-btn {
+        background: linear-gradient(135deg, #4caf50, #2e7d32);
+        color: white;
+        z-index: 20;
+      }
+
+      .yes-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+        background: linear-gradient(135deg, #45a049, #1b5e20);
+      }
+
+      .no-btn {
+        background: linear-gradient(135deg, #ff4d8d, #ff1493);
+        color: white;
+        position: absolute;
+        z-index: 15;
+      }
+
+      .no-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(255, 77, 141, 0.3);
+      }
+
+      .gallery {
+        display: none;
+        margin-top: 50px;
+        animation: fadeIn 1.5s ease;
+      }
+
+      .gallery-title {
+        color: #ff4d8d;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        font-weight: bold;
+      }
+
+      .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .photo-frame {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        transition: transform 0.4s ease;
+        height: 280px;
+        position: relative;
+      }
+
+      .photo-frame:hover {
+        transform: translateY(-10px) scale(1.03);
+      }
+
+      .memory-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .photo-frame:hover .memory-photo {
+        transform: scale(1.1);
+      }
+
+      .photo-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 77, 141, 0.9);
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .photo-frame:hover .photo-caption {
+        transform: translateY(0);
+      }
+
+      .celebration {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+        display: none;
+      }
+
+      .floating-heart {
+        position: absolute;
+        color: #ff4d8d;
+        font-size: 30px;
+        opacity: 0;
+        animation: floatUp 5s linear forwards;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .thank-you {
+        display: none;
+        background: linear-gradient(135deg, #4caf50, #2e7d32);
+        color: white;
+        padding: 25px;
+        border-radius: 20px;
+        margin-top: 40px;
+        font-size: 1.8rem;
+        font-weight: bold;
+        animation: fadeIn 1s ease;
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 25px;
+        }
+
+        h1 {
+          font-size: 2.3rem;
+        }
+
+        .message-box {
+          padding: 25px;
+        }
+
+        .btn {
+          padding: 15px 35px;
+          font-size: 1.4rem;
+          min-width: 150px;
+        }
+
+        .buttons-container {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .photos-grid {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .message-box p {
+          font-size: 1.1rem;
+        }
+
+        .btn {
+          padding: 15px 30px;
+          font-size: 1.3rem;
+        }
+
+        .photos-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="heart-bg heart-1">❤️</div>
+      <div class="heart-bg heart-2">❤️</div>
+      <div class="heart-bg heart-3">❤️</div>
+      <div class="heart-bg heart-4">❤️</div>
+
+      <div class="content">
+        <h1>Will You Be My Valentine?</h1>
+        <div class="subtitle">For the most amazing person I've ever known</div>
+
+        <div class="message-box">
+          <p>
+            From the very first moment I saw you, I knew there was something
+            special about you. Your smile has the power to light up even the
+            darkest days, and your laughter is the most beautiful sound I've
+            ever heard.
+          </p>
+
+          <p>
+            You are not just beautiful on the outside, but you have the most
+            <span class="highlight">beautiful soul</span> I've ever encountered.
+            Your kindness touches everyone around you, your intelligence
+            inspires me, and your compassion makes the world a better place.
+          </p>
+
+          <p>
+            Every day with you feels like a blessing. The way you see the good
+            in people, the passion you have for life, and the love you give so
+            freely - these are the things that make you truly extraordinary.
+          </p>
+
+          <p>
+            You are my favorite thought in the morning and my last thought at
+            night. Your presence in my life has brought me more joy than I ever
+            thought possible.
+          </p>
+        </div>
+
+        <div class="question">
+          So, MY MUNCHKIN💕💕❤️❤️❤️❤️💖, will you make me the happiest person
+          and be my Valentine?
+        </div>
+
+        <div class="buttons-container" id="buttonsContainer">
+          <button class="btn yes-btn" id="yesBtn">
+            <i class="fas fa-heart"></i> YES!
+          </button>
+          <button class="btn no-btn" id="noBtn">
+            <i class="fas fa-times"></i> No
+          </button>
+        </div>
+
+        <div class="thank-you" id="thankYou">
+          <i class="fas fa-heart"></i> You've made me the happiest person in the
+          world! <i class="fas fa-heart"></i>
+        </div>
+
+        <div class="gallery" id="gallery">
+          <h2 class="gallery-title">Our Beautiful Memories Together</h2>
+          <div class="photos-grid" id="photosGrid">
+            <!-- Photos will be loaded here from the photos folder -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const thankYou = document.getElementById('thankYou');
+        const gallery = document.getElementById('gallery');
+        const photosGrid = document.getElementById('photosGrid');
+        const celebration = document.getElementById('celebration');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+
+        let noClicks = 0;
+        const noButtonMessages = [
+          'No',
+          'Are you sure?',
+          'Really?',
+          'Think again!',
+          'Please?',
+          'One more chance?',
+          'Pretty please?',
+          'Last try!',
+          "I'm shy!",
+          'Okay, fine! 😊',
+        ];
+
+        // List of photos in the 'photos' folder
+        // ADD YOUR PHOTO FILENAMES HERE
+        const photoFiles = [
+          'memory1.jpg', // Change to your actual photo filenames
+          'memory2.jpg', // Example: 'our_beach_day.jpg'
+          'memory3.jpg', // Example: 'coffee_date.jpg'
+          'memory4.jpg', // Example: 'birthday_celebration.jpg'
+          'memory5.jpg', // Example: 'movie_night.jpg'
+          'memory6.jpg', // Example: 'road_trip.jpg'
+        ];
+
+        // Photo captions (customize these)
+        const photoCaptions = [
+          'Your never ending Beauty',
+          'Your sparkling eyes',
+          'MY MEDUSA',
+          'The softest hand ever',
+          'The date that i can never forget',
+          'The smile that melts my heart',
+        ];
+
+        // Function to move NO button to random position
+        function moveNoButton() {
+          const containerRect = buttonsContainer.getBoundingClientRect();
+          const buttonRect = noBtn.getBoundingClientRect();
+
+          // Calculate available space
+          const maxX = containerRect.width - buttonRect.width;
+          const maxY = containerRect.height - buttonRect.height;
+
+          // Generate random position
+          const randomX = Math.random() * maxX;
+          const randomY = Math.random() * maxY;
+
+          // Apply new position
+          noBtn.style.left = `${randomX}px`;
+          noBtn.style.top = `${randomY}px`;
+        }
+
+        // Function to create floating hearts
+        function createHearts(count) {
+          celebration.style.display = 'block';
+
+          for (let i = 0; i < count; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤️';
+
+            // Random position and size
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.fontSize = `${20 + Math.random() * 40}px`;
+            heart.style.animationDelay = `${Math.random() * 2}s`;
+
+            celebration.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+              heart.remove();
+            }, 5000);
+          }
+        }
+
+        // Function to load gallery photos
+        function loadGallery() {
+          photosGrid.innerHTML = '';
+
+          photoFiles.forEach((filename, index) => {
+            const photoFrame = document.createElement('div');
+            photoFrame.className = 'photo-frame';
+
+            // Create photo element - points to photos folder
+            const img = document.createElement('img');
+            img.className = 'memory-photo';
+            img.src = `photos/${filename}`;
+            img.alt = `Memory ${index + 1}`;
+            img.onerror = function () {
+              // If photo fails to load, show a placeholder
+              this.src =
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+            };
+
+            // Create caption
+            const caption = document.createElement('div');
+            caption.className = 'photo-caption';
+            caption.textContent =
+              photoCaptions[index] || `Beautiful Memory ${index + 1}`;
+
+            photoFrame.appendChild(img);
+            photoFrame.appendChild(caption);
+            photosGrid.appendChild(photoFrame);
+          });
+
+          gallery.style.display = 'block';
+          gallery.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // YES button click
+        yesBtn.addEventListener('click', function () {
+          // Hide the question
+          document.querySelector('.question').style.display = 'none';
+
+          // Hide both buttons
+          yesBtn.style.display = 'none';
+          noBtn.style.display = 'none';
+
+          // Show thank you message
+          thankYou.style.display = 'block';
+
+          // Create celebration hearts
+          createHearts(50);
+
+          // Load and show gallery after delay
+          setTimeout(() => {
+            loadGallery();
+            thankYou.scrollIntoView({ behavior: 'smooth' });
+          }, 1500);
+
+          // Keep creating hearts
+          setInterval(() => createHearts(5), 3000);
+        });
+
+        // NO button click - moves without showing message
+        noBtn.addEventListener('click', function () {
+          noClicks++;
+
+          // Move the button
+          moveNoButton();
+
+          // Change button text
+          const messageIndex = Math.min(
+            noClicks - 1,
+            noButtonMessages.length - 1
+          );
+          noBtn.innerHTML = `<i class="fas fa-times"></i> ${noButtonMessages[messageIndex]}`;
+
+          // Make button slightly smaller and then back
+          noBtn.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            noBtn.style.transform = 'scale(1)';
+          }, 150);
+
+          // After 10 clicks, make it say "Okay, fine!" and stop moving
+          if (noClicks >= 10) {
+            noBtn.innerHTML = '<i class="fas fa-heart"></i> Okay, fine!';
+            noBtn.style.background =
+              'linear-gradient(135deg, #4CAF50, #2E7D32)';
+            noBtn.onclick = function () {
+              yesBtn.click();
+            };
+          }
+        });
+
+        // Also move NO button when mouse gets close
+        buttonsContainer.addEventListener('mousemove', function (e) {
+          const noBtnRect = noBtn.getBoundingClientRect();
+          const containerRect = buttonsContainer.getBoundingClientRect();
+
+          const btnCenterX = noBtnRect.left + noBtnRect.width / 2;
+          const btnCenterY = noBtnRect.top + noBtnRect.height / 2;
+
+          const distance = Math.sqrt(
+            Math.pow(e.clientX - btnCenterX, 2) +
+              Math.pow(e.clientY - btnCenterY, 2)
+          );
+
+          // If mouse is within 100px, move the button
+          if (distance < 100) {
+            moveNoButton();
+          }
+        });
+
+        // Initialize NO button position
+        moveNoButton();
+      });
+    </script>
+  </body>
+</html>
